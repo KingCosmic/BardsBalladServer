@@ -11,22 +11,22 @@ const characterSchema = new Schema({
   personality: {
     bonds: {
       type: String,
-      default: 'here are my bonds'
+      default: 'Mittsie, Aliza\'s mother. '
     },
 
     flaws: {
       type: String,
-      default: 'what flaws? I\'m a perfect human being. Just ask anyone.'
+      default: 'Very untrusting and spiteful of authority.'
     },
 
     ideals: {
       type: String,
-      default: 'I\'m running out of default text bud.'
+      default: 'Leads a simple life, doesn\'t like gambling, values alone time.'
     },
 
     traits: {
       type: String,
-      default: 'I don\'t run from evil; Evil runs from me.'
+      default: 'Loyal, Honest, Self-Concerned, Frivilous with time.'
     }
   },
 
@@ -80,7 +80,7 @@ const characterSchema = new Schema({
   name: {
     type: String,
     required: true,
-    default: 'Capper'
+    default: 'Aliza Cartwight'
   },
 
   race: {
@@ -95,12 +95,12 @@ const characterSchema = new Schema({
 
   alignment: {
     type: String,
-    default: 'Chaotic/Stupid'
+    default: 'Neutral/Good'
   },
 
   background: {
     type: String,
-    default: 'wanderer'
+    default: 'Farmhand'
   },
 
   job: {
@@ -130,12 +130,12 @@ const characterSchema = new Schema({
 
   backstory: {
     type: String,
-    default: 'there is a air of suspion around me.'
+    default: 'Aliza Cartwright is a female farmhand who, when clergymen of the church found and killed her father for adultery, was forced to return to her mother\'s hovel in Estermeyer, where she grew up. Aliza, discontent with her new life and seeking medicine for her now-ailing mother returned to the scene of the murder to find some old family artifacts, but instead found the house nearly immaculate with a small entity sitting inside. Mittsie, as the creature identified itself, is a shadow spirit \'in training\', sent by her master Alevie to find and torment the people responsible for the murders'
   },
 
   allies: {
     type: String,
-    default: 'I travel alone.'
+    default: 'Mittsie, and her mother.'
   },
 
   ac: {
@@ -275,19 +275,17 @@ const characterSchema = new Schema({
 
   hitdice: {
     type: String,
-    default: '1d10'
+    default: '1d8'
   },
 
   deathsaves: {
     fails: {
-      first: { type: Boolean, default: false },
-      second: { type: Boolean, default: false },
-      third: { type: Boolean, default: false },
+      type: Number,
+      default: 0
     },
     success: {
-      first: { type: Boolean, default: false },
-      second: { type: Boolean, default: false },
-      third: { type: Boolean, default: false },
+      type: Number,
+      default: 0
     }
   },
 
