@@ -85,7 +85,7 @@ const characterSchema = new Schema({
 
   race: {
     type: String,
-    default: 'Human'
+    default: 'Half-Elf'
   },
 
   languages: {
@@ -105,7 +105,7 @@ const characterSchema = new Schema({
 
   job: {
     type: String,
-    default: 'adventurer'
+    default: 'adventurer 1'
   },
 
   passivePerception: {
@@ -123,11 +123,6 @@ const characterSchema = new Schema({
     default: 0
   },
 
-  level: {
-    type: Number,
-    default: 1
-  },
-
   backstory: {
     type: String,
     default: 'Aliza Cartwright is a female farmhand who, when clergymen of the church found and killed her father for adultery, was forced to return to her mother\'s hovel in Estermeyer, where she grew up. Aliza, discontent with her new life and seeking medicine for her now-ailing mother returned to the scene of the murder to find some old family artifacts, but instead found the house nearly immaculate with a small entity sitting inside. Mittsie, as the creature identified itself, is a shadow spirit \'in training\', sent by her master Alevie to find and torment the people responsible for the murders'
@@ -140,7 +135,7 @@ const characterSchema = new Schema({
 
   ac: {
     type: Number,
-    default: 0
+    default: 10
   },
 
   inspiration: {
@@ -151,11 +146,11 @@ const characterSchema = new Schema({
   hp: {
     current: {
       type: Number,
-      default: 10
+      default: 8
     },
     max: {
       type: Number,
-      default: 10
+      default: 8
     },
     temp: {
       type: Number,
@@ -164,14 +159,8 @@ const characterSchema = new Schema({
   },
 
   exp: {
-    current: {
-      type: Number,
-      default: 0
-    },
-    needed: {
-      type: Number,
-      default: 300
-    }
+    type: Number,
+    default: 0
   },
 
   speed: {
@@ -199,24 +188,24 @@ const characterSchema = new Schema({
   },
 
   skills: {
-    acrobatics: { type: Boolean, default: false },
-    animalHandling: { type: Boolean, default: false },
-    arcana: { type: Boolean, default: false },
-    athletics: { type: Boolean, default: false },
-    deception: { type: Boolean, default: false },
-    history: { type: Boolean, default: false },
-    insight: { type: Boolean, default: false },
-    intimidation: { type: Boolean, default: false },
-    investigation: { type: Boolean, default: false },
-    medicine: { type: Boolean, default: false },
-    nature: { type: Boolean, default: false },
-    perception: { type: Boolean, default: false },
-    performance: { type: Boolean, default: false },
-    persuasion: { type: Boolean, default: false },
-    religion: { type: Boolean, default: false },
-    sleightOfHand: { type: Boolean, default: false },
-    stealth: { type: Boolean, default: false },
-    survival: { type: Boolean, default: false }
+    acrobatics: { type: Number, default: 0 },
+    animalHandling: { type: Number, default: 0 },
+    arcana: { type: Number, default: 0 },
+    athletics: { type: Number, default: 0 },
+    deception: { type: Number, default: 0 },
+    history: { type: Number, default: 0 },
+    insight: { type: Number, default: 0 },
+    intimidation: { type: Number, default: 0 },
+    investigation: { type: Number, default: 0 },
+    medicine: { type: Number, default: 0 },
+    nature: { type: Number, default: 0 },
+    perception: { type: Number, default: 0 },
+    performance: { type: Number, default: 0 },
+    persuasion: { type: Number, default: 0 },
+    religion: { type: Number, default: 0 },
+    sleightOfHand: { type: Number, default: 0 },
+    stealth: { type: Number, default: 0 },
+    survival: { type: Number, default: 0 },
   },
 
   stats: {

@@ -52,8 +52,6 @@ router.post('/signup', ({ body: { email, password } }, res) => {
   user.save((err, newUser) => {
     if (err) return res.status(500).send({ err, message: 'Error accured trying to save user' });
 
-    delete newUser.password
-
     const payload = {
       _id: newUser._id
     }
