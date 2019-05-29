@@ -5,6 +5,45 @@ const JWT = require('../middleware/jwt');
 
 const Characters = require('../models/character');
 
+/*
+const arrayUpdates = (update, data, array) => {
+  for (let f = 0; f < data[array].length; f++) {
+    let item = data[array][f];
+
+    if (item.remove) {
+      if (!update.$pull) update.$pull = {}
+      if (!update.$pull[array]) update.$pull[array] = { 'id': { '$in': [] }}
+
+      update.$pull[array].id.$in.push(item.id)
+    } else if (item.new) {
+      if (!update.$push) update.$push = { [array]: { $each: [] } }
+
+      delete item.new
+      update.$push[array].$each.push(item)
+    } else {
+      if (!options.$set) options.$set = {}
+      if (!options.arrayFilters) options.arrayFilters = [];
+
+      // have to loop through the properties of the array
+      // that we need to modify
+      Object.keys(item).forEach(prop => {
+        update.$set[`${array}.$[${item.id}].${prop}`] = item[prop];
+      })
+      options.arrayFilters.push({ [`${item.id}.id`]: item.id });
+    }
+  }
+
+  // here we remove feats from the data
+  delete data[array]
+}*/
+
+
+const arrayUpdates = (update, data, array) => {
+  for (let i = 0; i < data[array].length; i++) {
+    if (data[array][i].new) delete data[array][i].new
+  }
+}
+
 router.use(JWT)
 
 router.get('/', (req, res) => {
@@ -71,35 +110,14 @@ router.post('/create', (req, res) => {
 
 router.post('/:characterID', ({ user, params: { characterID }, body: { data } }, res) => {
 
-  let update = { $set: {} };
+  let update = {};
   let options = { lean: true, new: true }
 
-  if (data.feats) {
-    for (let f = 0; f < data.feats.length; f++) {
-      let feat = data.feats[f];
+  if (data.feats) arrayUpdates(update, data, 'feats')
 
-      if (feat.new) {
-        if (!update.$push) update.$push = { feats: { $each: [] } }
+  if (data.items) arrayUpdates(update, data, 'items')
 
-        delete feat.new
-        update.$push.feats.$each.push(feat)
-      } else {
-        if (!options.arrayFilters) options.arrayFilters = [];
-
-        // have to loop through the properties of the array
-        // that we need to modify
-        Object.keys(feat).forEach(prop => {
-          update.$set[`feats.$[${feat.id}].${prop}`] = feat[prop];
-        })
-        options.arrayFilters.push({ [`${feat.id}.id`]: feat.id });
-      }
-    }
-
-    // here we remove feats from the data
-    delete data.feats
-  }
-
-  update.$set = { ...update.$set, ...data };
+  update.$set = { ...update.$set || {}, ...data };
 
   Characters.findByIdAndUpdate(
     characterID,
