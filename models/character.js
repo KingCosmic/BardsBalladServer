@@ -8,11 +8,6 @@ const characterSchema = new Schema({
     index: true
   },
 
-  manual: {
-    type: Boolean,
-    default: true,
-  },
-
   personality: {
     bonds: {
       type: String,
@@ -183,6 +178,19 @@ const characterSchema = new Schema({
   spells: {
     type: Array,
     default: []
+  },
+
+  armorProfs: {
+    type: String,
+    default: ''
+  },
+  weaponProfs: {
+    type: String,
+    default: ''
+  },
+  toolProfs: {
+    type: String,
+    default: ''
   },
 
   savingThrows: {

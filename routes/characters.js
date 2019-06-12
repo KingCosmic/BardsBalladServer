@@ -117,6 +117,8 @@ router.post('/:characterID', ({ user, params: { characterID }, body: { data } },
 
   if (data.items) arrayUpdates(update, data, 'items')
 
+  if (data.spells) arrayUpdates(update, data, 'spells')
+
   update.$set = { ...update.$set || {}, ...data };
 
   Characters.findByIdAndUpdate(
