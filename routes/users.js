@@ -9,7 +9,7 @@ const Users = require('../models/user');
 router.post('/login', ({ body: { email, password } }, res) => {
 
   Users.find({
-    email
+    email: email.toLowerCase()
   })
   .limit(1)
   .lean()
@@ -43,9 +43,8 @@ router.post('/login', ({ body: { email, password } }, res) => {
 
 // add our signup code first
 router.post('/signup', ({ body: { email, password } }, res) => {
-
   const user = new Users({
-    email,
+    email: email.toLowerCase(),
     password
   });
 
