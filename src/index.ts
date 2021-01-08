@@ -31,7 +31,7 @@ const init = async () => {
   await server.register({
     plugin: HapiGate,
     options: {
-      https: false,
+      https: process.env.https || false,
       nonwww: true
     }
   })
