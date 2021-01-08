@@ -11,12 +11,13 @@ import HapiJWTValidator from './validators/jwt'
 import routes from './routes'
 
 const init = async () => {
+  console.log('starting')
 
   await Database.connect()
   console.log('connected to database')
 
   const server = Server({
-    port: 4000,
+    port: process.env.PORT || 4000,
     host: 'localhost',
     routes: {
       cors: true
