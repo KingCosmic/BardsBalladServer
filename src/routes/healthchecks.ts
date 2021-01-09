@@ -12,8 +12,6 @@ routes.push({
   method: 'GET',
   path: '/',
   handler: async (req, h) => {
-    console.log(`health check recieved`)
-
     return h.response('nice').code(200)
   },
   options: {

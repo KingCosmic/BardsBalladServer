@@ -43,13 +43,16 @@ routes.push({
         const { email, password } = req.payload;
         console.log(`logging in ${email}`);
         const users = yield db_1.default.Users.find({ email: email.toLowerCase() }).limit(1).toArray();
+        console.log(users.length);
         if (users.length === 0)
             return h.response('no users with that email').code(404);
         let user = users[0];
         const isCorrectPassword = yield bcrypt.compare(password, user.password);
+        console.log(`correct password? ${isCorrectPassword}`);
         if (!isCorrectPassword)
             return h.response('passwords do not match').code(403);
         const token = jsonwebtoken_1.default.sign(user._id, process.env.jwtKey);
+        console.log(`token: ${token}`);
         return h.response({
             token
         }).code(200);

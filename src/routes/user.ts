@@ -27,6 +27,8 @@ routes.push({
 
     const users = await Db.Users.find({ email: email.toLowerCase() }).limit(1).toArray()
 
+    console.log(users.length)
+
     if (users.length === 0)
       return h.response('no users with that email').code(404)
 
@@ -37,7 +39,7 @@ routes.push({
     if (!isCorrectPassword)
       return h.response('passwords do not match').code(403)
 
-    const token = jwt.sign(user._id, process.env.jwtKey);
+    const token = jwt.sign(`${user._id}`, process.env.jwtKey);
 
     return h.response({
       token

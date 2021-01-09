@@ -37,7 +37,7 @@ const init = () => __awaiter(void 0, void 0, void 0, function* () {
     yield server.register({
         plugin: hapi_gate_1.default,
         options: {
-            https: process.env.https || false,
+            https: false,
             nonwww: true
         }
     });
