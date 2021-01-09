@@ -26,7 +26,7 @@ const init = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log('connected to database');
     const server = hapi_1.server({
         port: process.env.PORT || 4000,
-        host: 'localhost',
+        host: '0.0.0.0',
         routes: {
             cors: true
         }
