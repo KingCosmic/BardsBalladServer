@@ -10,7 +10,7 @@ export default async (decoded, request, h) => {
 
   try {
     const users = await Db.Users.find({
-      _id: ObjectId.createFromHexString(decoded),
+      _id: decoded,
     })
     .limit(1).toArray()
 

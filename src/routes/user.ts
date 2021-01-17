@@ -84,7 +84,7 @@ routes.push({
     auth: false,
     validate: {
       query: Joi.object({
-        username: Joi.string().min(1).max(20),
+        email: Joi.string().min(1).max(20),
         password: Joi.string().min(7)
       })
     }

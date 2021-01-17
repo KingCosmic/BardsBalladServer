@@ -1,7 +1,9 @@
-import { CharacterType } from '../types/character'
+import { CharacterType, CharacterSchema } from '../types/character'
 import Db from '../db'
 
 import { ServerRoute } from '@hapi/hapi'
+
+import Joi from '@hapi/joi'
 
 const routes: ServerRoute[] = []
 
@@ -72,9 +74,9 @@ routes.push({
  */
 
 interface SyncPayload {
-  created:[]
-  updated:[]
-  deleted:[]
+  created: CharacterType[]
+  updated: CharacterType[]
+  deleted: string[]
 }
 
 routes.push({
@@ -85,14 +87,49 @@ routes.push({
       const credentials = (req.auth.credentials as any)
       const { created, updated, deleted } = req.payload as SyncPayload
 
-      // create
+      // bulk write is great here.
+      await Db.Characters.bulkWrite([
+        // convert created characters into insertOne's
+        ...created.map(char => {
+          return {
+            insertOne: {
+              document: char
+            }
+          }
+        }),
 
-      // update
+        // convert updated characters into replaceOne's
+        ...updated.map(char => {
+          return {
+            replaceOne: {
+              filter: { _id: char._id },
+              replacement: char
+            }
+          }
+        }),
 
-      // delete ?
+        // and convert deleted into deleteOne's
+        ...deleted.map(id => {
+          return {
+            deleteOne: {
+              filter: { _id: id }
+            }
+          }
+        })
+      ]);
 
     } catch(e) {
       return h.response(e).code(500)
+    }
+  },
+  options: {
+    auth: 'jwt',
+    validate: {
+      query: Joi.object({
+        created: Joi.array().items(CharacterSchema).required(),
+        updated: Joi.array().items(CharacterSchema).required(),
+        deleted: Joi.array().items(Joi.string()).required()
+      })
     }
   }
 })
