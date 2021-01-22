@@ -84,8 +84,7 @@ export interface CharacterType {
 
 // TODO: add schema types for spells, items, etc.
 export const CharacterSchema = Joi.object({
-  _id: Joi.string().optional(),
-  id: Joi.string().required(),
+  _id: Joi.string().required(),
   ownerID: Joi.string().required(),
   bonds: Joi.string().required(),
   flaws: Joi.string().required(),

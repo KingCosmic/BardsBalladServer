@@ -27,8 +27,6 @@ routes.push({
 
     const users = await Db.Users.find({ email: email.toLowerCase() }).limit(1).toArray()
 
-    console.log(users.length)
-
     if (users.length === 0)
       return h.response('no users with that email').code(404)
 
@@ -39,7 +37,12 @@ routes.push({
     if (!isCorrectPassword)
       return h.response('passwords do not match').code(403)
 
-    const token = jwt.sign(`${user._id}`, process.env.jwtKey);
+    const token = jwt.sign({
+      id: user._id,
+      email: user.email,
+      beta: user.beta,
+      patreon: user.patreon
+    }, process.env.jwtKey);
 
     return h.response({
       token
@@ -67,14 +70,20 @@ routes.push({
 
     const hash = await bcrypt.hash(password, process.env.saltingRounds)
 
-    const user = {
+    const userInfo = {
       email: email.toLowerCase(),
       password: hash
     }
 
-    const result = await Db.Users.insertOne(user)
+    const result = await Db.Users.insertOne(userInfo)
+    const user = result.ops[0];
 
-    const token = jwt.sign(result.ops[0]._id, process.env.jwtKey);
+    const token = jwt.sign({
+      id: user._id,
+      email: user.email,
+      beta: user.beta,
+      patreon: user.patreon
+    }, process.env.jwtKey);
 
     return h.response({
       token

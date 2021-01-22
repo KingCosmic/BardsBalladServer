@@ -1,6 +1,8 @@
 import { CharacterType, CharacterSchema } from '../types/character'
 import Db from '../db'
 
+import { nanoid } from 'nanoid'
+
 import { ServerRoute } from '@hapi/hapi'
 
 import Joi from '@hapi/joi'
@@ -91,6 +93,11 @@ routes.push({
       await Db.Characters.bulkWrite([
         // convert created characters into insertOne's
         ...created.map(char => {
+
+          // we need to replace the client side generated id...
+          // ...with one made by the server.
+          char._id = nanoid(23)
+
           return {
             insertOne: {
               document: char

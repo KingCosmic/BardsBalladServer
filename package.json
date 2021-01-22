@@ -22,6 +22,7 @@
     "hapi-gate": "^2.1.0",
     "mongodb": "^3.6.3",
     "mongoose": "^5.9.25",
+    "nanoid": "^3.1.20",
     "nodemon": "^2.0.4",
     "typescript": "^3.9.7"
   },
