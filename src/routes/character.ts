@@ -1,4 +1,5 @@
 import { CharacterType, CharacterSchema } from '../types/character'
+import { UserType } from '../types/user'
 import Db from '../db'
 
 import { nanoid } from 'nanoid'
@@ -18,7 +19,7 @@ routes.push({
   handler: async (req, h) => {
     try {
       const characters = await Db.Characters.find({
-        ownerID: (req.auth.credentials as any).id
+        ownerID: (req.auth.credentials as UserType)._id
       }).toArray()
 
       return h.response(characters).code(200)
@@ -42,7 +43,7 @@ routes.push({
   path: '/characters/{characterID}',
   handler: async (req, h) => {
     try {
-      const userID = (req.auth.credentials as any).id
+      const userID = (req.auth.credentials as UserType)._id
 
       const characters:Array<CharacterType> = await Db.Characters.find({
         _id: req.params.characterID
