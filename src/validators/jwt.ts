@@ -10,7 +10,7 @@ export default async (decoded, request, h) => {
 
   try {
     const users = await Db.Users.find({
-      _id: decoded.userID,
+      _id: decoded.id,
     })
     .limit(1).toArray()
 

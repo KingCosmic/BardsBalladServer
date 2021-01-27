@@ -18,7 +18,7 @@ routes.push({
   handler: async (req, h) => {
     try {
       const characters = await Db.Characters.find({
-        ownerID: (req.auth.credentials as any)._id
+        ownerID: (req.auth.credentials as any).id
       }).toArray()
 
       return h.response(characters).code(200)
@@ -42,7 +42,7 @@ routes.push({
   path: '/characters/{characterID}',
   handler: async (req, h) => {
     try {
-      const userID = (req.auth.credentials as any)._id
+      const userID = (req.auth.credentials as any).id
 
       const characters:Array<CharacterType> = await Db.Characters.find({
         _id: req.params.characterID
