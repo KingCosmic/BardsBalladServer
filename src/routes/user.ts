@@ -25,7 +25,7 @@ routes.push({
 
     console.log(`logging in ${email}`)
 
-    const users = await Db.Users.find({ email: email.toLowerCase() }).limit(1).toArray()
+    const users = await Db.Users.find({ email: email.toLowerCase().trim() }).limit(1).toArray()
 
     if (users.length === 0)
       return h.response('no users with that email').code(404)
