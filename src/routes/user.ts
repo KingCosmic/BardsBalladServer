@@ -5,6 +5,8 @@ import Db from '../db'
 
 import Joi from '@hapi/joi'
 
+import { nanoid } from 'nanoid'
+
 import { ServerRoute } from '@hapi/hapi'
 import { Document } from 'mongoose'
 
@@ -68,9 +70,10 @@ routes.push({
       password: string
     }
 
-    const hash = await bcrypt.hash(password, process.env.saltingRounds)
+    const hash  = await bcrypt.hash(password, Number(process.env.saltingRounds))
 
     const userInfo = {
+      _id: nanoid(23),
       email: email.toLowerCase(),
       password: hash
     }
