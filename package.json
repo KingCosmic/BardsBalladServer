@@ -12,18 +12,18 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/hapi": "^19.2.0",
-    "@types/hapi__hapi": "^19.0.3",
+    "@types/hapi__hapi": "^20.0.8",
     "@types/mongoose": "^5.7.32",
-    "@types/node": "^14.0.23",
+    "@types/node": "^14.17.5",
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
-    "firebase-admin": "^9.4.2",
+    "firebase-admin": "^9.11.0",
     "hapi-auth-jwt2": "^10.1.0",
     "hapi-gate": "^2.1.0",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.9.25",
+    "mongoose": "^5.13.3",
     "nanoid": "^3.1.20",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.12",
     "typescript": "^3.9.7"
   },
   "devDependencies": {

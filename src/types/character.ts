@@ -1,6 +1,7 @@
 import Joi from '@hapi/joi'
 
 export interface CharacterType {
+  version:string,
   _id:string,
   ownerID:string,
   bonds:string,
@@ -84,16 +85,19 @@ export interface CharacterType {
 
 // TODO: add schema types for spells, items, etc.
 export const CharacterSchema = Joi.object({
+  version: Joi.string().required(),
+  system: Joi.string().required(),
   _id: Joi.string().required(),
   ownerID: Joi.string().required(),
-  bonds: Joi.string().required(),
-  flaws: Joi.string().required(),
-  ideals: Joi.string().required(),
-  traits: Joi.string().required(),
+  avatar: Joi.string().allow('').required(),
   castingClass: Joi.string().required(),
   castingAbility: Joi.string().required(),
-  castingDC: Joi.string().required(),
-  castingBonus: Joi.string().required(),
+  castingDC: Joi.number().required(),
+  castingBonus: Joi.number().required(),
+
+  pieces: Joi.any(),
+  __v: Joi.number(),
+  revision: Joi.string().allow(''),
 
   spellSlots: Joi.array().items(Joi.object({
     level: Joi.number().required(),
@@ -101,8 +105,13 @@ export const CharacterSchema = Joi.object({
     max: Joi.number().required()
   })).required(),
 
+  actions: Joi.array().required(),
+  conditions: Joi.array().required(),
+  creatures: Joi.array().required(),
+
   name: Joi.string().required(),
   race: Joi.string().required(),
+  age: Joi.number().required(),
   languages: Joi.string().required(),
   alignment: Joi.string().required(),
   background: Joi.string().required(),
@@ -111,7 +120,7 @@ export const CharacterSchema = Joi.object({
   initiative: Joi.number().required(),
   backstory: Joi.string().required(),
   ac: Joi.number().required(),
-  inspiration: Joi.string().required(),
+  inspiration: Joi.number().required(),
 
   hp: Joi.object({
     current: Joi.number().required(),
@@ -124,9 +133,11 @@ export const CharacterSchema = Joi.object({
   items: Joi.array().required(),
   feats: Joi.array().required(),
   spells: Joi.array().required(),
-  armorProfs: Joi.string().required(),
-  weaponProfs: Joi.string().required(),
-  toolProfs: Joi.string().required(),
+
+  // TODO:
+  armorProfs: Joi.array().required(),
+  weaponProfs: Joi.array().required(),
+  toolProfs: Joi.array().required(),
 
   savingThrows: Joi.object({
     charisma: Joi.boolean().required(),

@@ -1,6 +1,4 @@
-import { UserType } from '../types/user'
 import Db from '../db'
-import { ObjectId } from 'mongodb'
 
 // TODO: add in more checks (maybe a token, or something similar)
 // rn all we check is if there's a user with that id, people could forge jwt's

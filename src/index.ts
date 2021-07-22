@@ -9,6 +9,7 @@ import HapiGate from 'hapi-gate'
 import HapiJWTValidator from './validators/jwt'
 
 import routes from './routes'
+import { Boom } from '@hapi/boom'
 
 const init = async () => {
   console.log('starting')
@@ -20,7 +21,20 @@ const init = async () => {
     port: process.env.PORT || 4000,
     host: process.env.dev ? 'localhost' : '0.0.0.0',
     routes: {
-      cors: true
+      cors: true,
+      validate: {
+        failAction: async (request, h, err) => {
+          if (!process.env.dev) {
+            // In prod, log a limited error message and throw the default Bad Request error.
+            console.error('ValidationError:', err.message);
+            throw new Boom(`Invalid request payload input`);
+          } else {
+            // During development, log and respond with the full error.
+            console.error(err);
+            throw err;
+          }
+        }
+      }
     }
   })
 

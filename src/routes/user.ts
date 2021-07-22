@@ -53,9 +53,9 @@ routes.push({
   options: {
     auth: false,
     validate: {
-      query: Joi.object({
-        username: Joi.string().min(1).max(20),
-        password: Joi.string().min(7)
+      payload: Joi.object({
+        username: Joi.string().min(1).max(20).required(),
+        password: Joi.string().min(7).required()
       })
     }
   }
@@ -95,9 +95,9 @@ routes.push({
   options: {
     auth: false,
     validate: {
-      query: Joi.object({
-        email: Joi.string().min(1).max(20),
-        password: Joi.string().min(7)
+      payload: Joi.object({
+        email: Joi.string().min(1).max(20).required(),
+        password: Joi.string().min(7).required()
       })
     }
   }

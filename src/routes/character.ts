@@ -18,12 +18,15 @@ routes.push({
   path: '/characters',
   handler: async (req, h) => {
     try {
+      // grab all our characters that this user has.
       const characters = await Db.Characters.find({
-        ownerID: (req.auth.credentials as UserType)._id
+        ownerID: (req.auth.credentials as unknown as UserType)._id
       }).toArray()
 
+      // respond with the characters
       return h.response(characters).code(200)
     } catch(e) {
+      // return a server error.
       return h.response(e).code(500)
     }
   },
@@ -43,7 +46,7 @@ routes.push({
   path: '/characters/{characterID}',
   handler: async (req, h) => {
     try {
-      const userID = (req.auth.credentials as UserType)._id
+      const userID = (req.auth.credentials as unknown as UserType)._id
 
       const characters:Array<CharacterType> = await Db.Characters.find({
         _id: req.params.characterID
@@ -87,7 +90,7 @@ routes.push({
   path: '/characters/sync',
   handler: async (req, h) => {
     try {
-      const credentials = (req.auth.credentials as any)
+      const credentials = (req.auth.credentials as unknown as UserType)
       const { created, updated, deleted } = req.payload as SyncPayload
 
       // bulk write is great here.
@@ -126,6 +129,14 @@ routes.push({
         })
       ]);
 
+      // grab all our characters that this user has.
+      const characters = await Db.Characters.find({
+        ownerID: credentials._id
+      }).toArray()
+
+      // respond with the characters
+      return h.response(characters).code(200)
+
     } catch(e) {
       return h.response(e).code(500)
     }
@@ -133,7 +144,7 @@ routes.push({
   options: {
     auth: 'jwt',
     validate: {
-      query: Joi.object({
+      payload: Joi.object({
         created: Joi.array().items(CharacterSchema).required(),
         updated: Joi.array().items(CharacterSchema).required(),
         deleted: Joi.array().items(Joi.string()).required()
