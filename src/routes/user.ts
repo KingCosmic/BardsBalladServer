@@ -70,6 +70,11 @@ routes.push({
       password: string
     }
 
+    const site = email.split('@')[1]
+
+    // don't allow signup with our emails.
+    if (site === 'bardsballad.com') return h.response().code(403)
+
     const hash  = await bcrypt.hash(password, Number(process.env.saltingRounds))
 
     const userInfo = {
