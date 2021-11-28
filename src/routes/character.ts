@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid'
 
 import { ServerRoute } from '@hapi/hapi'
 
-import Joi from '@hapi/joi'
+import Joi from 'joi'
 
 const routes: ServerRoute[] = []
 
