@@ -8,9 +8,7 @@ class Database {
   public Characters:Collection<any>;
 
   constructor() {
-    this.client = new MongoClient(process.env.mongodb, {
-      useUnifiedTopology: true
-    });
+    this.client = new MongoClient(process.env.mongodb);
   }
 
   /**

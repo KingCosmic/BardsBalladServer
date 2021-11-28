@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt'
 import { UserType } from '../types/user'
 import Db from '../db'
 
-import Joi from '@hapi/joi'
+import Joi from 'joi'
 
 import { nanoid } from 'nanoid'
 
@@ -80,11 +80,13 @@ routes.push({
     const userInfo = {
       _id: nanoid(23),
       email: email.toLowerCase(),
-      password: hash
+      password: hash,
+      beta: false,
+      patreon: false
     }
 
-    const result = await Db.Users.insertOne(userInfo)
-    const user = result.ops[0];
+    const result = await Db.Users.insertOne(userInfo);
+    const user = await Db.Users.findOne<UserType>({_id: result.insertedId});
 
     const token = jwt.sign({
       id: user._id,
